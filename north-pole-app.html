@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #1a472a, #2d5a3f);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-title {
+            color: white;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .header {
+            background: #cc0000;
+            margin: -20px -20px 20px -20px;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .subheader {
+            color: #666;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+        .name-badge {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .button {
+            background: #2ea44f;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 20px 0;
+        }
+        .button:hover {
+            transform: scale(1.05);
+        }
+        .timer {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+        .permission-granted {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+        .loading-text {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #cc0000;
+            border-radius: 50%;
+            animation: bounce 0.5s infinite alternate;
+        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        .result {
+            display: none;
+            font-size: 20px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #cc0000;
+        }
+        .age-number {
+            font-size: 32px;
+            color: #cc0000;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .official-seal {
+            font-size: 12px;
+            color: #666;
+            border-top: 1px dashed #ccc;
+            margin-top: 20px;
+            padding-top: 10px;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .sparkling {
+            animation: sparkle 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">🎄 North Pole Magic Portal 🎄</h1>
+
+    <!-- Permission Container -->
+    <div class="container" id="permissionContainer">
+        <div class="header">
+            🎅 Elf Touch Permission Portal 🧝
+        </div>
+        <div class="subheader">
+            Special Connection Between:<br>
+            <span class="name-badge">Elfy the Elf</span> and 
+            <span class="name-badge">Connor</span>
+        </div>
+        <div id="permissionRequest">
+            <p>Dear Connor,</p>
+            <p>Press the magical button below to request special permission from Santa to touch Elfy.</p>
+            <button class="button" id="requestButton" onclick="grantPermission()">
+                Request Elf Touch Permission
+            </button>
+        </div>
+        <div id="permissionGranted" class="permission-granted">
+            🌟 Permission Granted! 🌟<br>
+            Connor, you have Santa's special permission to touch Elfy!
+        </div>
+        <div id="timer" class="timer" style="display: none;">
+            Time Remaining: 24h 00m 00s
+        </div>
+        <div class="official-seal">
+            Official North Pole Document #NPE-2024-123<br>
+            Certified by: Santa Claus & Elfy the Elf<br>
+            🎄 North Pole Magic Division 🎄
+        </div>
+    </div>
+
+    <!-- Age Checker Container -->
+    <div class="container">
+        <div class="header">
+            🧝 Elf Age Checker 📋
+        </div>
+        <div id="checkRequest">
+            <p>Would you like to check Elfy's age?</p>
+            <p style="font-size: 14px; color: #666;">
+                (Connecting to North Pole Database...)
+            </p>
+            <button class="button" onclick="checkAge()">
+                Check Elfy's Age
+            </button>
+        </div>
+        <div id="loading" class="loading">
+            <div class="loading-text">
+                Searching North Pole Records...
+            </div>
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        <div id="result" class="result">
+            <p>✨ Age Found in North Pole Records! ✨</p>
+            <div class="age-number">247 Years Old</div>
+            <p>Elfy was born in the Year 1777<br>
+            during the Great North Pole Snowfall!</p>
+        </div>
+        <div class="official-seal">
+            Official North Pole Document #NPE-AGE-2024<br>
+            Verified by: Santa's Record Keeping Department<br>
+            🎄 North Pole Archives Division 🎄
+        </div>
+    </div>
+
+    <script>
+        function grantPermission() {
+            const container = document.getElementById('permissionContainer');
+            const permissionRequest = document.getElementById('permissionRequest');
+            const permissionGranted = document.getElementById('permissionGranted');
+            const timer = document.getElementById('timer');
+            
+            // Add sparkle effect
+            container.classList.add('sparkling');
+            
+            setTimeout(() => {
+                container.classList.remove('sparkling');
+                permissionRequest.style.display = 'none';
+                permissionGranted.style.display = 'block';
+                timer.style.display = 'block';
+                startTimer();
+            }, 1000);
+        }
+
+        function startTimer() {
+            let timeLeft = 24 * 60 * 60; // 24 hours in seconds
+            
+            const timerInterval = setInterval(() => {
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+                
+                document.getElementById('timer').innerHTML = 
+                    `Time Remaining: ${hours}h ${minutes}m ${seconds}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    location.reload(); // Reset the page when time is up
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+
+        function checkAge() {
+            const checkRequest = document.getElementById('checkRequest');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            // Hide check button and show loading
+            checkRequest.style.display = 'none';
+            loading.style.display = 'block';
+            
+            // After 5 seconds, show the result
+            setTimeout(() => {
+                loading.style.display = 'none';
+                result.style.display = 'block';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
