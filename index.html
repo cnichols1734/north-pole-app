@@ -131,6 +131,15 @@
             margin-top: 20px;
             padding-top: 10px;
         }
+        .elf-select {
+            padding: 10px;
+            font-size: 4vw;
+            border-radius: 10px;
+            border: 2px solid #cc0000;
+            margin: 10px 0;
+            width: 80%;
+            max-width: 300px;
+        }
         @keyframes bounce {
             from {
                 transform: translateY(0);
@@ -198,12 +207,16 @@
             🧝 Elf Age Checker 📋
         </div>
         <div id="checkRequest">
-            <p>Would you like to check Elfy's age?</p>
+            <p>Which elf would you like to check?</p>
+            <select id="elfSelect" class="elf-select">
+                <option value="elfy">Elfy the Elf</option>
+                <option value="cokie">Cokie the Elf</option>
+            </select>
             <p style="font-size: 4vw; color: #666;">
                 (Connecting to North Pole Database...)
             </p>
             <button class="button" onclick="checkAge()">
-                Check Elfy's Age
+                Check Elf's Age
             </button>
         </div>
         <div id="loading" class="loading">
@@ -218,9 +231,8 @@
         </div>
         <div id="result" class="result">
             <p>✨ Age Found in North Pole Records! ✨</p>
-            <div class="age-number">247 Years Old</div>
-            <p>Elfy was born in the Year 1777<br>
-            during the Great North Pole Snowfall!</p>
+            <div id="ageResult" class="age-number"></div>
+            <p id="elfDetails"></p>
         </div>
         <div class="official-seal">
             Official North Pole Document #NPE-AGE-2024<br>
@@ -230,6 +242,19 @@
     </div>
 
     <script>
+        const elfData = {
+            elfy: {
+                age: 247,
+                birthYear: 1777,
+                details: "Born during the Great North Pole Snowfall!"
+            },
+            cokie: {
+                age: 412,
+                birthYear: 1612,
+                details: "Graduated from the first-ever Candy Cane Making Academy!"
+            }
+        };
+
         function grantPermission() {
             const container = document.getElementById('permissionContainer');
             const permissionRequest = document.getElementById('permissionRequest');
@@ -264,14 +289,23 @@
         }
 
         function checkAge() {
+            const selectedElf = document.getElementById('elfSelect').value;
             const checkRequest = document.getElementById('checkRequest');
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
+            const ageResult = document.getElementById('ageResult');
+            const elfDetails = document.getElementById('elfDetails');
+
             checkRequest.style.display = 'none';
             loading.style.display = 'block';
+            
             setTimeout(() => {
                 loading.style.display = 'none';
                 result.style.display = 'block';
+                
+                const elf = elfData[selectedElf];
+                ageResult.textContent = `${elf.age} Years Old`;
+                elfDetails.innerHTML = `Born in the Year ${elf.birthYear}<br>${elf.details}`;
             }, 5000);
         }
     </script>
