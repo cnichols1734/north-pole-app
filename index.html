@@ -15,7 +15,6 @@
             align-items: center;
             box-sizing: border-box;
         }
-
         .page-title {
             color: white;
             text-align: center;
@@ -23,7 +22,6 @@
             margin-bottom: 20px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-
         .container {
             background: white;
             padding: 20px;
@@ -33,9 +31,7 @@
             max-width: 90%;
             color: #333;
             margin-bottom: 20px;
-            box-sizing: border-box;
         }
-
         .header {
             background: #cc0000;
             margin: -20px -20px 20px -20px;
@@ -45,13 +41,11 @@
             font-size: 5vw;
             font-weight: bold;
         }
-
         .subheader {
             color: #666;
             margin: 15px 0;
             font-size: 4vw;
         }
-
         .name-badge {
             background: #f8d7da;
             color: #721c24;
@@ -62,7 +56,6 @@
             font-weight: bold;
             font-size: 3.5vw;
         }
-
         .button {
             background: #2ea44f;
             color: white;
@@ -74,17 +67,14 @@
             transition: transform 0.2s;
             margin: 20px 0;
         }
-
         .button:hover {
             transform: scale(1.05);
         }
-
         .timer {
             font-size: 5vw;
             margin: 20px 0;
             color: #333;
         }
-
         .permission-granted {
             background: #d4edda;
             color: #155724;
@@ -93,23 +83,19 @@
             margin: 20px 0;
             display: none;
         }
-
         .loading {
             display: none;
             margin: 20px 0;
         }
-
         .loading-text {
             margin-bottom: 10px;
             color: #666;
         }
-
         .loading-dots {
             display: flex;
             justify-content: center;
             gap: 8px;
         }
-
         .dot {
             width: 12px;
             height: 12px;
@@ -117,15 +103,12 @@
             border-radius: 50%;
             animation: bounce 0.5s infinite alternate;
         }
-
         .dot:nth-child(2) {
             animation-delay: 0.2s;
         }
-
         .dot:nth-child(3) {
             animation-delay: 0.4s;
         }
-
         .result {
             display: none;
             font-size: 4vw;
@@ -135,14 +118,12 @@
             border-radius: 10px;
             border: 2px dashed #cc0000;
         }
-
         .age-number {
             font-size: 6vw;
             color: #cc0000;
             font-weight: bold;
             margin: 10px 0;
         }
-
         .official-seal {
             font-size: 3vw;
             color: #666;
@@ -150,34 +131,28 @@
             margin-top: 20px;
             padding-top: 10px;
         }
-
         @keyframes bounce {
             from {
                 transform: translateY(0);
             }
-
             to {
                 transform: translateY(-10px);
             }
         }
-
         @keyframes sparkle {
             0% {
                 transform: scale(1);
                 opacity: 1;
             }
-
             50% {
                 transform: scale(1.2);
                 opacity: 0.8;
             }
-
             100% {
                 transform: scale(1);
                 opacity: 1;
             }
         }
-
         .sparkling {
             animation: sparkle 0.5s ease-in-out;
         }
@@ -186,13 +161,14 @@
 <body>
     <h1 class="page-title">🎄 North Pole Magic Portal 🎄</h1>
 
+    <!-- Permission Container -->
     <div class="container" id="permissionContainer">
         <div class="header">
             🎅 Elf Touch Permission Portal 🧝
         </div>
         <div class="subheader">
             Special Connection Between:<br>
-            <span class="name-badge">Elfy the Elf</span> and
+            <span class="name-badge">Elfy the Elf</span> and 
             <span class="name-badge">Connor</span>
         </div>
         <div id="permissionRequest">
@@ -216,15 +192,52 @@
         </div>
     </div>
 
+    <!-- Age Checker Container -->
+    <div class="container">
+        <div class="header">
+            🧝 Elf Age Checker 📋
+        </div>
+        <div id="checkRequest">
+            <p>Would you like to check Elfy's age?</p>
+            <p style="font-size: 4vw; color: #666;">
+                (Connecting to North Pole Database...)
+            </p>
+            <button class="button" onclick="checkAge()">
+                Check Elfy's Age
+            </button>
+        </div>
+        <div id="loading" class="loading">
+            <div class="loading-text">
+                Searching North Pole Records...
+            </div>
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        <div id="result" class="result">
+            <p>✨ Age Found in North Pole Records! ✨</p>
+            <div class="age-number">247 Years Old</div>
+            <p>Elfy was born in the Year 1777<br>
+            during the Great North Pole Snowfall!</p>
+        </div>
+        <div class="official-seal">
+            Official North Pole Document #NPE-AGE-2024<br>
+            Verified by: Santa's Record Keeping Department<br>
+            🎄 North Pole Archives Division 🎄
+        </div>
+    </div>
+
     <script>
         function grantPermission() {
             const container = document.getElementById('permissionContainer');
             const permissionRequest = document.getElementById('permissionRequest');
             const permissionGranted = document.getElementById('permissionGranted');
             const timer = document.getElementById('timer');
-
+            
             container.classList.add('sparkling');
-
+            
             setTimeout(() => {
                 container.classList.remove('sparkling');
                 permissionRequest.style.display = 'none';
@@ -235,23 +248,31 @@
         }
 
         function startTimer() {
-            let timeLeft = 24 * 60 * 60;
-
+            let timeLeft = 24 * 60 * 60; 
             const timerInterval = setInterval(() => {
                 const hours = Math.floor(timeLeft / 3600);
                 const minutes = Math.floor((timeLeft % 3600) / 60);
                 const seconds = timeLeft % 60;
-
                 document.getElementById('timer').innerHTML = 
                     `Time Remaining: ${hours}h ${minutes}m ${seconds}s`;
-
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    location.reload();
+                    location.reload(); 
                 }
-
                 timeLeft--;
             }, 1000);
+        }
+
+        function checkAge() {
+            const checkRequest = document.getElementById('checkRequest');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            checkRequest.style.display = 'none';
+            loading.style.display = 'block';
+            setTimeout(() => {
+                loading.style.display = 'none';
+                result.style.display = 'block';
+            }, 5000);
         }
     </script>
 </body>
